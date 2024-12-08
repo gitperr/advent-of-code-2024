@@ -1,0 +1,155 @@
+47|53 --> pass. 47 on index 1, 53 on index 3
+97|13 --> ignore. 13 is missing.
+97|61 --> ignore. 97 is missing.
+97|47 --> ignore. 97 is missing.
+75|29 --> pass. 75 on index 0, 29 on index 4
+61|13 --> ignore. 13 is missing.
+75|53 --> pass. 75 on index 0, 53 on index 3
+29|13 --> ignore. 13 is missing.
+97|29 --> ignore. 97 is missing.
+53|29 --> pass. 53 on index 3, 29 on index 4
+61|53 --> pass. 61 on index 2, 53 on index 3
+97|53 --> ignore. 97 is missing.
+61|29 --> pass. 61 on index 2, 29 on index 4
+47|13 --> ignore. 13 is missing.
+75|47 --> pass. 75 on index 0, 47 on index 1
+97|75 --> ignore. 97 is missing.
+47|61 --> pass. 47 on index 1, 61 on index 2
+75|61 --> pass. 75 on index 0, 61 on index 2
+47|29 --> pass. 47 on index 1, 29 on index 4
+75|13 --> ignore. 13 is missing.
+53|13 --> ignore. 13 is missing
+
+75,47,61,53,29  --> success
+97,61,53,29,13
+75,29,13
+75,97,47,61,53
+61,13,29
+97,13,75,29,47
+
+--- first half ---
+Objective: Find the total from numbers in the middle on the correctly ordered lists.
+0. Load the lists one by one after the first empty line delimiter --> DONE
+1. Load the rules one by one and test (see 3), UNTIL the first empty line delimiter --> DONE
+2. Ignore if one of the numbers is missing in the list --> DONE
+3. Test if first number has the least index. (49|51 --> 49 must be lower on index, check above examples).  --> DONE
+>> ALL unignored cases must succeed.
+
+(test 1 for second half)
+47|53 --> one or more numbers not present, ignored
+97|13 --> one or more numbers not present, ignored
+97|61 --> one or more numbers not present, ignored
+97|47 --> one or more numbers not present, ignored
+75|29 --> one or more numbers not present, ignored
+61|13 --> 61 on index 0, 13 on index 1. Passes as is, no need to swap places in list.
+75|53 --> one or more numbers not present, ignored
+29|13 --> 13 on index 1, 29 on index 2. Does not pass as is, swap their places in the list.
+97|29 --> one or more numbers not present, ignored
+53|29 --> one or more numbers not present, ignored
+61|53 --> one or more numbers not present, ignored
+97|53 --> one or more numbers not present, ignored
+61|29 --> 61 on index 0, 29 on index 1 AFTER SWAP earlier. Passes as is, no need to swap places in list.
+47|13 --> one or more numbers not present, ignored
+75|47 --> one or more numbers not present, ignored
+97|75 --> one or more numbers not present, ignored
+47|61 --> one or more numbers not present, ignored
+75|61 --> one or more numbers not present, ignored
+47|29 --> one or more numbers not present, ignored
+75|13 --> one or more numbers not present, ignored
+53|13 --> one or more numbers not present, ignored
+
+(test 2 for second half)
+47|53 --> 47 on index 2, 53 on index 4. Passes as is, no need to swap.
+97|13 --> one or more numbers not present, ignored 
+97|61 --> 97 on index 1, 61 on index 3. Passes as is, no need to swap.
+97|47 --> 97 on index 1, 47 on index 2. Passes as is, no need to swap.
+75|29 --> one or more numbers not present, ignored
+61|13 --> one or more numbers not present, ignored
+75|53 --> 75 on index 0, 53 on index 4. Passes as is, no need to swap.
+29|13 --> one or more numbers not present, ignored
+97|29 --> one or more numbers not present, ignored
+53|29 --> one or more numbers not present, ignored
+61|53 --> 61 on index 3, 53 on index 4. Passes as is, no need to swap.
+97|53 --> 97 on index 1, 53 on index 4. Passes as is, no need to swap.
+61|29 --> one or more numbers not present, ignored
+47|13 --> one or more numbers not present, ignored
+75|47 --> 75 on index 0, 47 on index 2. Passes as is, no need to swap.
+97|75 --> 97 on index 1, 75 on index 0. Fails as is. Swap places so 97 is earlier. Now it is 97,75,47,61,53
+47|61 --> 47 on index 2, 61 on index 3. Passes as is, no need to swap.
+75|61 --> 75 on index 1, 61 on index 3. Passes as is, no need to swap.
+47|29 --> one or more numbers not present, ignored
+75|13 --> one or more numbers not present, ignored
+53|13 --> one or more numbers not present, ignored
+
+(test 3 for second half)
+47|53 --> one or more numbers not present, ignored
+97|13 --> 97 on index 0, 13 on index 1. Passes, no swapping.
+97|61 --> one or more numbers not present, ignored
+97|47 --> 97 on index 0, 47 on index 4. Passes, no swapping.
+75|29 --> 75 on index 2, 29 on index 3. Passes, no swapping.
+61|13 --> one or more numbers not present, ignored
+75|53 --> one or more numbers not present, ignored
+29|13 --> 29 on index 3, 13 on index 1. Fails. Swap places. It is now 97,29,75,13,47
+97|29 --> 97 on index 0, 29 on index 1. Passes, no swapping.
+53|29 --> one or more numbers not present, ignored
+61|53 --> one or more numbers not present, ignored
+97|53 --> one or more numbers not present, ignored
+61|29 --> one or more numbers not present, ignored
+47|13 --> 47 on index 4, 13 on index 3. Fails. Swap places. It is now 97,29,75,47,13
+75|47 --> 75 on index 2, 47 on index 3. Passes, no swapping.
+97|75 --> 97 on index 0, 75 on index 2. Passes, no swapping.
+47|61 --> one or more numbers not present, ignored
+75|61 --> one or more numbers not present, ignored
+47|29 --> 47 on index 3, 29 on index 1. Fails. Swap places. It is now 97,47,75,29,13
+75|13 --> 75 on index 2, 13 on index 4. Passes, no swapping.
+53|13 --> one or more numbers not present, ignored
+
+---> Swaps were needed, so apply non ignored rules again
+
+(apply the rules again, until no swaps are needed)
+97|13 --> 97 on index 0, 13 on index 4. Passes, no swapping.
+97|47 --> 97 on index 0, 47 on index 1. Passes, no swapping.
+75|29 --> 75 on index 2, 29 on index 3. Passes, no swapping.
+29|13 --> 29 on index 3, 13 on index 4. Passes, no swapping.
+97|29 --> 97 on index 0, 29 on index 3. Passes, no swapping.
+47|13 --> 47 on index 1, 13 on index 4. Passes, no swapping.
+75|47 --> 75 on index 2, 47 on index 1. Fails. Swap places. It is now 97,75,47,29,13
+97|75 --> Passes...
+47|29 --> Passes...
+75|13 --> Passes...
+
+(apply rules again, because swap was needed)
+97|13 --> Passes...
+97|47 --> Passes...
+75|29 --> Passes...
+29|13 --> Passes...
+97|29 --> Passes...
+47|13 --> Passes...
+75|47 --> Passes...
+97|75 --> Passes...
+47|29 --> Passes...
+75|13 --> Passes...
+
+75,47,61,53,29 --> correct/ignored
+97,61,53,29,13 --> correct/ignored
+75,29,13 --> correct/ignored
+75,97,47,61,53 --> incorrect
+61,13,29 --> incorrect
+97,13,75,29,47 --> incorrect
+
+--- second half ---
+Objective: Fix incorrectly ordered lists and find the total from numbers in the middle.
+
+Example:
+61,13,29 becomes 61,29,13. --> testing (see test 1 above)
+75,97,47,61,53 becomes 97,75,47,61,53. --> testing (see test 2 above)
+97,13,75,29,47 becomes 97,75,47,29,13. --> testing (see test 3 above)
+
+0. Load lists --> DONE
+1. Load rules --> DONE
+2. Find the incorrect lists. --> DONE
+3. Fix the lists found in previous step. --> DONE
+3a. Analyze list with rules from top to bottom, if a number is not found, ignore that rule. --> DONE
+3b. Until no more swapping is needed in a list, keep re-applying the rules and swapping orders. --> DONE
+4. When list is fixed, add the number from the middle to grand total. --> DONE
+

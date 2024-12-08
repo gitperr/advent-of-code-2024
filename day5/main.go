@@ -25,6 +25,20 @@ func getFirstHalfResult(inputFile string) int {
 	return total
 }
 
+func getSecondHalfResult(inputFile string) int {
+	var total = 0
+	listsToCorrect := findIncorrectLists(inputFile)
+	rules := loadRules(inputFile)
+	//fmt.Println(listsToCorrect)
+	fixedLists := fixIncorrectLists(listsToCorrect, rules)
+	//fmt.Println(fixedLists)
+	for _, listToAnalyze := range fixedLists {
+		total = total + analyzeList(listToAnalyze, rules)
+	}
+
+	return total
+}
+
 func loadRules(filePath string) []rule {
 	var listOfRules []rule
 
@@ -122,6 +136,99 @@ func compareIndexesOfNumbers(numList []int, rule rule) bool {
 	return firstNumIndex < secondNumIndex
 }
 
+func findIncorrectIndexes(numList []int, rule rule) (bool, int, int) {
+	var firstNumIndex int
+	var secondNumIndex int
+	var incorrectIndexesFound bool = false
+
+	for numIndex, numToCheck := range numList {
+		if numToCheck == rule.firstNum {
+			firstNumIndex = numIndex
+		}
+
+		if numToCheck == rule.secondNum {
+			secondNumIndex = numIndex
+		}
+	}
+
+	if !(firstNumIndex < secondNumIndex) {
+		incorrectIndexesFound = true
+		return incorrectIndexesFound, firstNumIndex, secondNumIndex
+	}
+
+	return incorrectIndexesFound, 0, 0
+}
+
+func findIncorrectLists(inputFile string) [][]int {
+	var incorrectLists [][]int
+	listsToAnalyze := loadListsToAnalyze(inputFile)
+	rules := loadRules(inputFile)
+
+	for _, listToAnalyze := range listsToAnalyze {
+		checkedList := checkIfIncorrectList(listToAnalyze, rules)
+		if checkedList != nil {
+			incorrectLists = append(incorrectLists, checkedList)
+		}
+	}
+
+	return incorrectLists
+}
+
+func checkIfIncorrectList(numList []int, rules []rule) []int {
+	for _, rule := range rules {
+		if !checkBothNumsPresent(numList, rule) {
+			continue
+		}
+
+		if !compareIndexesOfNumbers(numList, rule) {
+			return numList
+		}
+	}
+
+	return nil
+}
+
+func fixIncorrectList(numList []int, rules []rule) ([]int, bool) {
+	var incorrectRuleFound bool = false
+	for _, rule := range rules {
+		if !checkBothNumsPresent(numList, rule) {
+			continue
+		}
+
+		incorrectIndexFound, indexOne, indexTwo := findIncorrectIndexes(numList, rule)
+
+		if !incorrectIndexFound {
+			continue
+		}
+
+		incorrectRuleFound = true
+		numList[indexOne], numList[indexTwo] = numList[indexTwo], numList[indexOne]
+	}
+
+	return numList, incorrectRuleFound
+}
+
+func fixListUntilCorrect(numList []int, rules []rule) []int {
+	for {
+		var incorrectFound bool
+		numList, incorrectFound = fixIncorrectList(numList, rules)
+		if !incorrectFound {
+			break
+		}
+	}
+	return numList
+}
+
+func fixIncorrectLists(listsToFix [][]int, rules []rule) [][]int {
+	var fixedLists [][]int
+	for _, listToFix := range listsToFix {
+		fixedList := fixListUntilCorrect(listToFix, rules)
+		fixedLists = append(fixedLists, fixedList)
+	}
+
+	return fixedLists
+}
+
 func analyzeList(numList []int, rules []rule) int {
 	var middleNumber = 0
 	for _, rule := range rules {
@@ -139,5 +246,6 @@ func analyzeList(numList []int, rules []rule) int {
 
 func main() {
 	inputFile := "input.txt"
-	fmt.Println(getFirstHalfResult(inputFile))
+	//fmt.Println(getFirstHalfResult(inputFile))
+	fmt.Println(getSecondHalfResult(inputFile))
 }
