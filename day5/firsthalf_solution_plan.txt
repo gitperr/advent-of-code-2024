@@ -28,7 +28,7 @@
 97,13,75,29,47
 
 0. Load the lists one by one after the first empty line delimiter --> DONE
-1. Load the rules one by one and test (see 3), UNTIL the first empty line delimiter
-2. Ignore if one of the numbers is missing in the list
-3. Test if first number has the least index. (49|51 --> 49 must be lower on index, check above examples). 
+1. Load the rules one by one and test (see 3), UNTIL the first empty line delimiter --> DONE
+2. Ignore if one of the numbers is missing in the list --> DONE
+3. Test if first number has the least index. (49|51 --> 49 must be lower on index, check above examples).  --> DONE
 >> ALL unignored cases must succeed.
