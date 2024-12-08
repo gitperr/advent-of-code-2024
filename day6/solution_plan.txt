@@ -1,0 +1,172 @@
+....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
+
+....#.....
+....^....#
+....X.....
+..#.X.....
+....X..#..
+....X.....
+.#........
+........#.
+#.........
+......#...
+
+....#.....
+....XXXX>#
+....X.....
+..#.X.....
+....X..#..
+....X.....
+.#........
+........#.
+#.........
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+....X..#X.
+....X...X.
+.#......v.
+........#.
+#.........
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+....X..#X.
+....X...X.
+.#<XXXXXX.
+........#.
+#.........
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..^.X..#X.
+..X.X...X.
+.#XXXXXXX.
+........#.
+#.........
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXX>#X.
+..X.X...X.
+.#XXXXXXX.
+........#.
+#.........
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXX"X"XX. ----> marked X is not a "distinct" one, because it was already stepped on earlier
+......X.#.
+#.....v...
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+......X.#.
+#<XXXXX...
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+.^....X.#.
+#XXXXXX...
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+.XXXXX"X">#. ----> marked X is not a "distinct" one, because it was already stepped on earlier
+#XXXXXX...
+......#...
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+.XXXXXXX#. 
+#XXXXXXX..
+......#v..
+
+(guard left)
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+.XXXXXXX#.
+#XXXXXXX..
+......#X..
+
+....#.....
+....XXXXX#
+....X...X.
+..#.X...X.
+..XXXXX#X.
+..X.X.X.X.
+.#XXXXXXX.
+.XXXXXXX#.
+#XXXXXXX..
+......#X..
+
+--- first half ---
+Objective: Mark everywhere the guard patrols with X, and calculate the "distinc" total of squares it walked to.
+
+1. Load the map into a 2D array --> DONE
+2. Assign directions to "arrows" --> DONE
+>> "<" should start moving left in the same row, so decrement x coordinate 
+>> ">" should start moving right in the same row, so increment x coordinate
+>> "^" should move up in the same column, so decrement y coordinate
+>> "v" should move down in the same column, so increment y coordinate
+3. Assign # as obstacle coordinate. If guard comes to 1 index distance, it must collide and turn "right" by 90 degrees
+>> "<" would become "^"
+>> "^" would become ">"
+>> ">" would become "v"
+>> "v" would become "<"
+4. Keep track of guard's coordinates at all times, so it is easy to mark the path it patrols.
+>> Every x,y coordinate guard steps on should be marked with X **if not already marked with X**
+5. When guard is "out" of the 2D array (AKA out of bounds), return the total
